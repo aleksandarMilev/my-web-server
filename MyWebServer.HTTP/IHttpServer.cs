@@ -1,11 +1,12 @@
 ﻿namespace MyWebServer.HTTP
 {
     using System;
+    using System.Threading.Tasks;
 
     public interface IHttpServer
     {
         void AddRoute(string path, Func<IHttpRequest, IHttpResponse> action);
 
-        void Start(int port);
+        Task StartAsync (int port);
     }
 }
