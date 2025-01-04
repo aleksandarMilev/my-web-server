@@ -1,7 +1,6 @@
 ﻿namespace MyWebServer.HTTP
 {
-    public class Class1
+    public interface IHttpResponse
     {
-
     }
 }
