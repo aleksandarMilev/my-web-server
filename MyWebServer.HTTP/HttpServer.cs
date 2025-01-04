@@ -4,10 +4,12 @@
     using System.Collections.Generic;
     using System.Net;
     using System.Net.Sockets;
+    using System.Text;
     using System.Threading.Tasks;
-    using Request;
-    using Response;
+    using ReqestResponse.Request;
+    using ReqestResponse.Response;
 
+    using static Common.Constants.Common;
     using static Common.Constants.HttpServer;
 
     /// <summary>
@@ -79,6 +81,24 @@
                     data.AddRange(buffer);
                 }
             }
+
+            var resquestString = Encoding.UTF8.GetString(data.ToArray());
+            var httpRequest = new HttpRequest(resquestString);
+            Console.WriteLine(httpRequest);
+
+            var responseBody = "<h1>Hello, World!</h1>";
+            var responseBodyAsByteArray = Encoding.UTF8.GetBytes(responseBody);
+
+            var response =
+                "HTTP/3 200 OK" + NewLine + 
+                "Server: MyWebServer" + NewLine + 
+                "Content-Type: text/html" + NewLine + 
+                $"Content-Lenght: {responseBodyAsByteArray.Length}" + NewLine + NewLine;
+
+            var reponseAsByteArray = Encoding.UTF8.GetBytes(response);
+
+            await stream.WriteAsync(reponseAsByteArray);
+            await stream.WriteAsync(responseBodyAsByteArray);
         }
     }
 }

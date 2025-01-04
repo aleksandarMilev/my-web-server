@@ -4,11 +4,9 @@
 
     internal class Program
     {
-        private static async Task Main()
-        {
-            await HttpServerBuilder
+        private static async Task Main() 
+            => await HttpServerBuilder
                 .Build()
                 .StartAsync();
-        }
     }
 }
