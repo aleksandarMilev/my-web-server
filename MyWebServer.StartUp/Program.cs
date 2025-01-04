@@ -1,10 +1,14 @@
 ﻿namespace MyWebServer.StartUp
 {
+    using HTTP.Builder;
+
     internal class Program
     {
-        static void Main(string[] args)
+        private static async Task Main()
         {
-            Console.WriteLine("Hello, World!");
+            await HttpServerBuilder
+                .Build()
+                .StartAsync();
         }
     }
 }

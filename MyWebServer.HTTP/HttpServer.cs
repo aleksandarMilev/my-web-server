@@ -5,25 +5,38 @@
     using System.Net;
     using System.Net.Sockets;
     using System.Threading.Tasks;
+    using Request;
+    using Response;
 
-    using static Constants.HttpServer;
+    using static Common.Constants.HttpServer;
 
+    /// <summary>
+    /// Represents an HTTP server that handles routing and processes incoming requests.
+    /// </summary>
     public class HttpServer : IHttpServer
     {
-        private readonly Dictionary<string, Func<IHttpRequest, IHttpResponse>> routeTable = [];
+        private readonly IDictionary<string, Func<IHttpRequest, IHttpResponse>> 
+            routeTable = new Dictionary<string, Func<IHttpRequest, IHttpResponse>>();
 
-        public void AddRoute(string path, Func<IHttpRequest, IHttpResponse> action)
+        internal HttpServer() { } //Only IHttpServerBuilder should create new instances of this class in other assembly
+
+        /// <inheritdoc />
+        public IHttpServer AddRoute(string path, Func<IHttpRequest, IHttpResponse> action)
         {
             if (this.routeTable.ContainsKey(path))
             {
                 this.routeTable[path] = action;
-                return;
+            }
+            else
+            {
+                this.routeTable.Add(path, action);
             }
 
-            this.routeTable.Add(path, action);
+            return this;
         }
 
-        public async Task StartAsync(int port)
+        /// <inheritdoc />
+        public async Task StartAsync(int port = DefaultPort)
         {
             using var tcpListener = new TcpListener(IPAddress.Loopback, port);
             tcpListener.Start();

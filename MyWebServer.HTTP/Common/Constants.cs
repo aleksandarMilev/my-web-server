@@ -1,4 +1,4 @@
-﻿namespace MyWebServer.HTTP
+﻿namespace MyWebServer.HTTP.Common
 {
     public static class Constants
     {
@@ -10,6 +10,7 @@
         public class HttpServer
         {
             public const int BufferInitLength = 4_096;
+            public const int DefaultPort = 80;
         }
     }
 }
