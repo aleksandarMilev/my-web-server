@@ -6,6 +6,8 @@
     using System.Net.Sockets;
     using System.Threading.Tasks;
 
+    using static Constants.HttpServer;
+
     public class HttpServer : IHttpServer
     {
         private readonly Dictionary<string, Func<IHttpRequest, IHttpResponse>> routeTable = [];
@@ -28,7 +30,7 @@
 
             while (true)
             {
-                var tcpClient = await tcpListener.AcceptTcpClientAsync();
+                using var tcpClient = await tcpListener.AcceptTcpClientAsync();
 
 #pragma warning disable CS4014
                 //we're not awaiting this because we don't need the result from processing the current client.
@@ -38,8 +40,32 @@
             }
         }
 
-        private async Task ProcessClientAsync(TcpClient tcpClient)
+        private static async Task ProcessClientAsync(TcpClient tcpClient)
         {
+            using var stream = tcpClient.GetStream();
+
+            var position = 0;
+            var buffer = new byte[BufferInitLength];
+            var data = new List<byte>();
+
+            while (true)
+            {
+                var count = await stream.ReadAsync(buffer.AsMemory(position, buffer.Length));
+                position += count;
+
+                if (count < buffer.Length)
+                {
+                    var partialBuffer = new byte[count];
+                    Array.Copy(buffer, partialBuffer, count);
+                    data.AddRange(partialBuffer);
+
+                    break;
+                }
+                else
+                {
+                    data.AddRange(buffer);
+                }
+            }
         }
     }
 }
