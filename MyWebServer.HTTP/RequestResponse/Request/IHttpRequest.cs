@@ -6,9 +6,9 @@
     {
         RequestLine RequestLine { get; }
 
-        ICollection<Header> Headers { get; }
+        IReadOnlyCollection<Header> Headers { get; }
 
-        ICollection<Cookie> Cookies { get; }
+        IReadOnlyCollection<RequestCookie> Cookies { get; }
 
         string? Body { get; }
     }

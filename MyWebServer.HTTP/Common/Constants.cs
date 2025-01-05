@@ -2,16 +2,13 @@
 {
     public static class Constants
     {
-        public class Common
-        {
-            public const int Zero = 0;
+        public const int DefaultPort = 80;
 
-            public const string NewLine = "\r\n";
-        }
+        public const string NewLine = "\r\n";
 
-        public class HttpServer
+        public class ContentTypes
         {
-            public const int DefaultPort = 80;
+            public const string Html = "text/html";
         }
     }
 }

@@ -18,6 +18,12 @@
             this.Value = headerParts[1];
         }
 
+        public Header(string key, string value)
+        {
+            this.Key = key;
+            this.Value = value;
+        }
+
         public string Key { get; } = null!;
 
         public string? Value { get; }

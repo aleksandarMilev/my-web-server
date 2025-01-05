@@ -5,7 +5,7 @@
     using RequestResponse.Request;
     using RequestResponse.Response;
 
-    using static Common.Constants.HttpServer;
+    using static Common.Constants;
 
     /// <summary>
     /// Defines the interface for an HTTP server that can handle routing and start listening for incoming requests.

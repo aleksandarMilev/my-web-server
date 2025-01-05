@@ -1,6 +1,6 @@
 ﻿namespace MyWebServer.HTTP.RequestResponse
 {
-    public class Cookie
+    public abstract class Cookie
     {
         private const char KeyValueSeparator = '=';
         private const int KeyValuesCount = 2;

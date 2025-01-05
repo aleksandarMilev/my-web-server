@@ -1,6 +1,6 @@
 ﻿namespace MyWebServer.HTTP.RequestResponse.Response
 {
-    public enum HttpStatusCodes
+    public enum HttpStatus
     {
         Ok = 200,
         Created = 201,

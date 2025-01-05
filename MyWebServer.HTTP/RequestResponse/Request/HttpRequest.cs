@@ -5,39 +5,42 @@
     using System.Linq;
     using System.Text;
 
-    using static Common.Constants.Common;
+    using static Common.Constants;
 
     public class HttpRequest : IHttpRequest
     {
         private const string CookieElementsSeparator = "; ";
 
+        private readonly ICollection<Header> headers = new List<Header>();
+        private readonly ICollection<RequestCookie> cookies = new List<RequestCookie>();
+
         public HttpRequest(string request) => this.ParseRequest(request);
 
         public RequestLine RequestLine { get; private set; } = null!;
 
-        public ICollection<Header> Headers { get; } = new List<Header>();
+        public IReadOnlyCollection<Header> Headers => this.headers.ToList().AsReadOnly();
 
-        public ICollection<Cookie> Cookies { get; } = new List<Cookie>();
+        public IReadOnlyCollection<RequestCookie> Cookies => this.cookies.ToList().AsReadOnly();
 
         public string? Body { get; private set; }
 
         public override string ToString()
         {
-            var result = new StringBuilder();
+            var request = new StringBuilder();
 
-            result.AppendLine(this.RequestLine.ToString());
+            request.AppendLine(this.RequestLine.ToString());
 
-            foreach (var header in this.Headers)
+            foreach (var header in this.headers)
             {
-                result.AppendLine(header.ToString());
+                request.AppendLine(header.ToString());
             }
 
             if (this.Body is not null)
             {
-               result.AppendLine(this.Body);
+                request.AppendLine(this.Body);
             }
 
-            return result.ToString();
+            return request.ToString().TrimEnd();
         }
 
         private void ParseRequest(string request)
@@ -65,7 +68,7 @@
 
                 if (isInHeaders)
                 {
-                    this.Headers.Add(new Header(line));
+                    this.headers.Add(new Header(line));
                 }
                 else
                 {
@@ -79,7 +82,7 @@
 
         private void ParseCookieIfExists()
         {
-            var cookie = this.Headers.FirstOrDefault(h => h.Key == nameof(Cookie));
+            var cookie = this.headers.FirstOrDefault(h => h.Key == nameof(Cookie));
 
             if (cookie is not null && cookie.Value is not null)
             {
@@ -89,7 +92,7 @@
                         CookieElementsSeparator,
                         StringSplitOptions.RemoveEmptyEntries)
                     .ToList()
-                    .ForEach(c => this.Cookies.Add(new Cookie(c)));
+                    .ForEach(c => this.cookies.Add(new RequestCookie(c)));
             }
         }
     }

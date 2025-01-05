@@ -4,11 +4,11 @@
 
     public class RequestLine
     {
-        private const char RequestLineElementsSepartor = ' ';
+        private const char RequestLineElementsSeparator = ' ';
 
         public RequestLine(string requestLine)
         {
-            var requestLineParts = requestLine.Split(RequestLineElementsSepartor);
+            var requestLineParts = requestLine.Split(RequestLineElementsSeparator);
 
             this.Method = StringToHttpMethod(requestLineParts[0]);
             this.Path = requestLineParts[1];
@@ -30,7 +30,7 @@
                 return result;
             }
 
-            throw new ArgumentException($"The value '{value}' is not valid for enum type {typeof(HttpMethod).Name}.");
+            return HttpMethod.Get;
         }
     }
 }

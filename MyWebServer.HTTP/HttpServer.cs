@@ -9,8 +9,7 @@
     using RequestResponse.Request;
     using RequestResponse.Response;
 
-    using static Common.Constants.Common;
-    using static Common.Constants.HttpServer;
+    using static Common.Constants;
 
     /// <summary>
     /// Represents an HTTP server that handles routing and processes incoming requests.
@@ -18,8 +17,9 @@
     public class HttpServer : IHttpServer
     {
         private const int BufferInitLength = 4_096;
+        private const string ServerName = "My Web Server";
 
-        private readonly IDictionary<string, Func<IHttpRequest, IHttpResponse>> 
+        private readonly IDictionary<string, Func<IHttpRequest, IHttpResponse>>
             routeTable = new Dictionary<string, Func<IHttpRequest, IHttpResponse>>();
 
         internal HttpServer() { } //Only IHttpServerBuilder should create new instances of this class in other assemblies
@@ -27,13 +27,9 @@
         /// <inheritdoc />
         public IHttpServer AddRoute(string path, Func<IHttpRequest, IHttpResponse> action)
         {
-            if (this.routeTable.ContainsKey(path))
+            if (!this.routeTable.TryAdd(path, action))
             {
                 this.routeTable[path] = action;
-            }
-            else
-            {
-                this.routeTable.Add(path, action);
             }
 
             return this;
@@ -79,23 +75,16 @@
                 }
             }
 
-            var resquestString = Encoding.UTF8.GetString(data.ToArray());
-            var httpRequest = new HttpRequest(resquestString);
-            Console.WriteLine(httpRequest);
+            var requestString = Encoding.UTF8.GetString(data.ToArray());
+            var request = new HttpRequest(requestString);
 
-            var responseBody = "<h1>Hello, World!</h1>";
-            var responseBodyAsByteArray = Encoding.UTF8.GetBytes(responseBody);
+            var responseBodyBytes = Encoding.UTF8.GetBytes("<h1>Hello, World!</h1>");
+            var response = new HttpResponse(
+                ServerName,
+                ContentTypes.Html,
+                responseBodyBytes);
 
-            var response =
-                "HTTP/3 200 OK" + NewLine + 
-                "Server: MyWebServer" + NewLine + 
-                "Content-Type: text/html" + NewLine + 
-                $"Content-Lenght: {responseBodyAsByteArray.Length}" + NewLine + NewLine;
-
-            var reponseAsByteArray = Encoding.UTF8.GetBytes(response);
-
-            await stream.WriteAsync(reponseAsByteArray);
-            await stream.WriteAsync(responseBodyAsByteArray);
+            await stream.WriteAsync(response.ToByteArray());
         }
     }
 }
