@@ -6,6 +6,8 @@
 
         public const string NewLine = "\r\n";
 
+        public const string ServerName = "My Web Server";
+
         public class ContentTypes
         {
             public const string Html = "text/html";

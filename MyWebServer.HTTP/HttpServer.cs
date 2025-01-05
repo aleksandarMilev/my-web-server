@@ -17,7 +17,6 @@
     public class HttpServer : IHttpServer
     {
         private const int BufferInitLength = 4_096;
-        private const string ServerName = "My Web Server";
 
         private readonly IDictionary<string, Func<IHttpRequest, IHttpResponse>>
             routeTable = new Dictionary<string, Func<IHttpRequest, IHttpResponse>>();
@@ -48,7 +47,7 @@
             }
         }
 
-        private static async Task ProcessClientAsync(TcpClient tcpClient)
+        private async Task ProcessClientAsync(TcpClient tcpClient)
         {
             using var stream = tcpClient.GetStream();
 
@@ -78,11 +77,20 @@
             var requestString = Encoding.UTF8.GetString(data.ToArray());
             var request = new HttpRequest(requestString);
 
-            var responseBodyBytes = Encoding.UTF8.GetBytes("<h1>Hello, World!</h1>");
-            var response = new HttpResponse(
-                ServerName,
-                ContentTypes.Html,
-                responseBodyBytes);
+            IHttpResponse response = null!;
+
+            if (this.routeTable.TryGetValue(request.RequestLine.Path, out var action))
+            {
+                response = action(request);
+            }
+            else
+            {
+                response = new HttpResponse(
+                    ServerName,
+                    ContentTypes.Html,
+                    Encoding.UTF8.GetBytes("<h1>Ooops... the page you are looking for was not found!</h1>"),
+                    HttpStatus.NotFound);
+            }
 
             await stream.WriteAsync(response.ToByteArray());
         }
