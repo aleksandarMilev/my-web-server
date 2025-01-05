@@ -6,8 +6,8 @@
     using System.Net.Sockets;
     using System.Text;
     using System.Threading.Tasks;
-    using ReqestResponse.Request;
-    using ReqestResponse.Response;
+    using RequestResponse.Request;
+    using RequestResponse.Response;
 
     using static Common.Constants.Common;
     using static Common.Constants.HttpServer;
@@ -17,10 +17,12 @@
     /// </summary>
     public class HttpServer : IHttpServer
     {
+        private const int BufferInitLength = 4_096;
+
         private readonly IDictionary<string, Func<IHttpRequest, IHttpResponse>> 
             routeTable = new Dictionary<string, Func<IHttpRequest, IHttpResponse>>();
 
-        internal HttpServer() { } //Only IHttpServerBuilder should create new instances of this class in other assembly
+        internal HttpServer() { } //Only IHttpServerBuilder should create new instances of this class in other assemblies
 
         /// <inheritdoc />
         public IHttpServer AddRoute(string path, Func<IHttpRequest, IHttpResponse> action)
@@ -46,12 +48,7 @@
             while (true)
             {
                 using var tcpClient = await tcpListener.AcceptTcpClientAsync();
-
-#pragma warning disable CS4014
-                //we're not awaiting this because we don't need the result from processing the current client.
-                ProcessClientAsync(tcpClient);
-#pragma warning restore CS4014
-
+                await ProcessClientAsync(tcpClient);
             }
         }
 

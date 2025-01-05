@@ -1,4 +1,4 @@
-﻿namespace MyWebServer.HTTP.ReqestResponse.Response
+﻿namespace MyWebServer.HTTP.RequestResponse.Response
 {
     public class HttpResponse : IHttpResponse
     {

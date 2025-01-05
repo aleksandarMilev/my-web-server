@@ -1,4 +1,4 @@
-﻿namespace MyWebServer.HTTP.ReqestResponse
+﻿namespace MyWebServer.HTTP.RequestResponse
 {
     public enum HttpMethod
     {

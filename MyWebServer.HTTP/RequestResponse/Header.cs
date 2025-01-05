@@ -1,8 +1,8 @@
-﻿namespace MyWebServer.HTTP.ReqestResponse
+﻿namespace MyWebServer.HTTP.RequestResponse
 {
     using System;
 
-    public readonly struct Header
+    public class Header
     {
         private const int SeparatedElementsCount = 2;
         private const string Separator = ": ";

@@ -2,8 +2,8 @@
 {
     using System;
     using System.Threading.Tasks;
-    using ReqestResponse.Request;
-    using ReqestResponse.Response;
+    using RequestResponse.Request;
+    using RequestResponse.Response;
 
     using static Common.Constants.HttpServer;
 

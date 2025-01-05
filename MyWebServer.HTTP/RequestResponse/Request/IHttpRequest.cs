@@ -1,12 +1,10 @@
-﻿namespace MyWebServer.HTTP.ReqestResponse.Request
+﻿namespace MyWebServer.HTTP.RequestResponse.Request
 {
     using System.Collections.Generic;
 
     public interface IHttpRequest
     {
-        string Path { get; }
-
-        HttpMethod Method { get; }
+        RequestLine RequestLine { get; }
 
         ICollection<Header> Headers { get; }
 

@@ -11,8 +11,6 @@
 
         public class HttpServer
         {
-            public const int BufferInitLength = 4_096;
-
             public const int DefaultPort = 80;
         }
     }
