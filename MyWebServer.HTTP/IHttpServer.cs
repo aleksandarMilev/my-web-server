@@ -13,12 +13,18 @@
     public interface IHttpServer
     {
         /// <summary>
-        /// Registers a new route and its associated action. If an action is already defined for this route, it will be replaced with the new one.
+        /// Registers a new route and its associated action. 
+        /// If no path is provided, the route path will be automatically generated using the method name of the provided action, 
+        /// prefixed by a route separator (e.g., "/home" for a method named "Home").
+        /// If an action is already defined for this route, it will be replaced with the new one.
         /// </summary>
-        /// <param name="path">The path of the route to be handled by the server.</param>
-        /// <param name="action">A function that takes an <see cref="IHttpRequest"/> and returns an <see cref="IHttpResponse"/> for the route.</param>
+        /// <param name="action">A function that returns an <see cref="IHttpResponse"/> for the route.</param>
+        /// <param name="path">
+        /// (Optional) The explicit path of the route to be handled by the server. 
+        /// If null, the method name of the action will be used as the route path, prefixed with a route separator.
+        /// </param>
         /// <returns>An instance of <see cref="IHttpServer"/> to allow for method chaining.</returns>
-        IHttpServer AddRoute(string path, Func<IHttpRequest, IHttpResponse> action);
+        IHttpServer AddRoute(Func<IHttpResponse> action, string? path = null);
 
         /// <summary>
         /// Starts the HTTP server asynchronously on the specified port.

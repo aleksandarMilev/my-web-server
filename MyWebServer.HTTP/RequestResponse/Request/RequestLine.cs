@@ -2,6 +2,8 @@
 {
     using System;
 
+    using static Common.Constants;
+
     public class RequestLine
     {
         private const char RequestLineElementsSeparator = ' ';
@@ -11,7 +13,10 @@
             var requestLineParts = requestLine.Split(RequestLineElementsSeparator);
 
             this.Method = StringToHttpMethod(requestLineParts[0]);
-            this.Path = requestLineParts[1];
+            this.Path = requestLineParts[1] != RouteSeparator 
+                ? requestLineParts[1] 
+                : $"{RouteSeparator}{HomeRoute}";
+
             this.Version = requestLineParts[2];
         }
 

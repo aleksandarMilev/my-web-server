@@ -18,14 +18,15 @@
     {
         private const int BufferInitLength = 4_096;
 
-        private readonly IDictionary<string, Func<IHttpRequest, IHttpResponse>>
-            routeTable = new Dictionary<string, Func<IHttpRequest, IHttpResponse>>();
+        private readonly IDictionary<string, Func<IHttpResponse>> routeTable = new Dictionary<string, Func<IHttpResponse>>();
 
         internal HttpServer() { } //Only IHttpServerBuilder should create new instances of this class in other assemblies
 
         /// <inheritdoc />
-        public IHttpServer AddRoute(string path, Func<IHttpRequest, IHttpResponse> action)
+        public IHttpServer AddRoute(Func<IHttpResponse> action, string? path = null)
         {
+            path ??= $"{RouteSeparator}{action.Method.Name.ToLower()}";
+
             if (!this.routeTable.TryAdd(path, action))
             {
                 this.routeTable[path] = action;
@@ -77,11 +78,11 @@
             var requestString = Encoding.UTF8.GetString(data.ToArray());
             var request = new HttpRequest(requestString);
 
-            IHttpResponse response = null!;
+            IHttpResponse response;
 
-            if (this.routeTable.TryGetValue(request.RequestLine.Path, out var action))
+            if (this.routeTable.TryGetValue(request.RequestLine.Path.ToLower(), out var action))
             {
-                response = action(request);
+                response = action();
             }
             else
             {

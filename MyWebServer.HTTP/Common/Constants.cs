@@ -6,7 +6,11 @@
 
         public const string NewLine = "\r\n";
 
+        public const string RouteSeparator = "/";
+
         public const string ServerName = "My Web Server";
+        
+        public const string HomeRoute = "home";
 
         public class ContentTypes
         {
