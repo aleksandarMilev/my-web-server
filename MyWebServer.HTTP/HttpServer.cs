@@ -86,11 +86,7 @@
             }
             else
             {
-                response = new HttpResponse(
-                    ServerName,
-                    ContentTypes.Html,
-                    Encoding.UTF8.GetBytes("<h1>Ooops... the page you are looking for was not found!</h1>"),
-                    HttpStatus.NotFound);
+                response = new HttpResponse("<h1>Ooops... the page you are looking for was not found!</h1>");
             }
 
             await stream.WriteAsync(response.ToByteArray());

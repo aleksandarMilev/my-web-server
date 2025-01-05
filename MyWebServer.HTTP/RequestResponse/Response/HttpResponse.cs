@@ -13,20 +13,20 @@
         private readonly ICollection<ResponseCookie> cookies = new List<ResponseCookie>();
 
         public HttpResponse(
-            string serverName,
-            string contentType,
-            byte[] body,
+            string bodyAsString,
+            string serverName = ServerName,
+            string contentType = ContentTypes.Html,
             HttpStatus status = HttpStatus.Ok)
         {
+            this.Body = Encoding.UTF8.GetBytes(bodyAsString);
+            this.StatusLine = new(Version.Three, status);
+
             this.headers = new List<Header>()
             {
                new(HeaderKeys.Server, serverName),
                new(HeaderKeys.ContentType, contentType),
-               new(HeaderKeys.ContentLength, body.Length.ToString())
+               new(HeaderKeys.ContentLength, this.Body.Length.ToString())
             };
-
-            this.Body = body;
-            this.StatusLine = new(Version.Three, status);
 
             this.cookies = new List<ResponseCookie>();
         }
