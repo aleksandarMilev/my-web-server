@@ -15,11 +15,11 @@
             this.Version = requestLineParts[2];
         }
 
-        public string Path { get; private set; } = null!;
+        public string Path { get; } = null!;
 
-        public HttpMethod Method { get; private set; }
+        public HttpMethod Method { get; }
 
-        public string Version { get; private set; } = null!;
+        public string Version { get; } = null!;
 
         public override string ToString() => $"{this.Method} {this.Path} {this.Version}";
 
