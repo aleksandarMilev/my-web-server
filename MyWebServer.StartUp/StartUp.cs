@@ -5,7 +5,7 @@
 
     internal class Program
     {
-        private static async Task Main() 
+        private static async Task Main()
             => await HttpServerBuilder
                 .Build()
                 .AddRoute(() => new HttpResponse("<h1>Home</h1>"), "/home")

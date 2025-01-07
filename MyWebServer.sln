@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyWebServer.HTTP", "MyWebServer.HTTP\MyWebServer.HTTP.csproj", "{A9678853-E252-43EF-90F6-CDF99DB97BC3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyWebServer.HTTP", "MyWebServer.HTTP\MyWebServer.HTTP.csproj", "{A9678853-E252-43EF-90F6-CDF99DB97BC3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyWebServer.StartUp", "MyWebServer.StartUp\MyWebServer.StartUp.csproj", "{58040FD8-C480-426E-B08C-4C7E0CD73F61}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyWebServer.StartUp", "MyWebServer.StartUp\MyWebServer.StartUp.csproj", "{58040FD8-C480-426E-B08C-4C7E0CD73F61}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyWebServer.Mvc", "MyWebServer.Mvc\MyWebServer.Mvc.csproj", "{72786F3E-6E7E-4A73-BE42-900C8C503C7B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{58040FD8-C480-426E-B08C-4C7E0CD73F61}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{58040FD8-C480-426E-B08C-4C7E0CD73F61}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{58040FD8-C480-426E-B08C-4C7E0CD73F61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72786F3E-6E7E-4A73-BE42-900C8C503C7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72786F3E-6E7E-4A73-BE42-900C8C503C7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72786F3E-6E7E-4A73-BE42-900C8C503C7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72786F3E-6E7E-4A73-BE42-900C8C503C7B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
