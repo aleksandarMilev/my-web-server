@@ -10,7 +10,9 @@
 
         public const string ServerName = "My Web Server";
         
-        public const string IndexRoute = "index";
+        public const string IndexActionRoute = "index";
+
+        public const string HomeControllerRoute = "home";
 
         public class ContentTypes
         {

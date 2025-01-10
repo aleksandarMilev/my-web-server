@@ -1,10 +1,10 @@
 ﻿namespace MyWebServer.StartUp.Controllers
 {
-    using MyWebServer.HTTP.RequestResponse.Response;
-    using MyWebServer.Mvc;
+    using HTTP.RequestResponse.Response;
+    using Mvc;
 
-    public class HomeController : Controller
+    public class HomeController : MvcController
     {
-        public IHttpResponse Index() => this.View("Views/Home/Index.html");
+        public IHttpResponse Index() => this.View();
     }
 }

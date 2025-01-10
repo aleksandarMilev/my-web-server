@@ -6,36 +6,24 @@
     using System.Net.Sockets;
     using System.Text;
     using System.Threading.Tasks;
+    using System.Xml;
     using RequestResponse.Request;
     using RequestResponse.Response;
 
     using static Common.Constants;
 
-    /// <summary>
-    /// Represents an HTTP server that handles routing and processes incoming requests.
-    /// </summary>
     public class HttpServer : IHttpServer
     {
         private const int BufferInitLength = 4_096;
 
-        private readonly IDictionary<string, Func<IHttpResponse>> routeTable = new Dictionary<string, Func<IHttpResponse>>();
+        private readonly Dictionary<string, Func<IHttpResponse>> routes = [];
 
-        internal HttpServer() { } //Only IHttpServerBuilder should create new instances of this class in other assemblies
-
-        /// <inheritdoc />
-        public IHttpServer AddRoute(Func<IHttpResponse> action, string? path = null)
+        public IHttpServer AddRoute(Func<IHttpResponse> action, string path)
         {
-            path ??= $"{RouteSeparator}{action.Method.Name.ToLower()}";
-
-            if (!this.routeTable.TryAdd(path, action))
-            {
-                this.routeTable[path] = action;
-            }
-
+            this.routes[path] = action;
             return this;
         }
 
-        /// <inheritdoc />
         public async Task StartAsync(int port = DefaultPort)
         {
             using var tcpListener = new TcpListener(IPAddress.Loopback, port);
@@ -80,7 +68,7 @@
 
             IHttpResponse response;
 
-            if (this.routeTable.TryGetValue(request.RequestLine.Path.ToLower(), out var action))
+            if (this.routes.TryGetValue(request.RequestLine.Path.ToLower(), out var action))
             {
                 response = action();
             }

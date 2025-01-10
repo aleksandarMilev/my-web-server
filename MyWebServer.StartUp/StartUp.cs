@@ -1,14 +1,12 @@
 ﻿namespace MyWebServer.StartUp
 {
-    using Controllers;
-    using HTTP.Builder;
+    using Mvc;
 
     internal class Program
     {
         private static async Task Main()
-            => await HttpServerBuilder
-                .Build()
-                .AddRoute(new HomeController().Index)
+            => await new WebApplicationBuilder()
+                .MapControllers()
                 .StartAsync();
     }
 }

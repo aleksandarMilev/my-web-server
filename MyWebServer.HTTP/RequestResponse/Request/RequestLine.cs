@@ -15,7 +15,7 @@
             this.Method = StringToHttpMethod(requestLineParts[0]);
             this.Path = requestLineParts[1] != RouteSeparator 
                 ? requestLineParts[1] 
-                : $"{RouteSeparator}{IndexRoute}";
+                : $"{RouteSeparator}{HomeControllerRoute}{RouteSeparator}{IndexActionRoute}";
 
             this.Version = requestLineParts[2];
         }

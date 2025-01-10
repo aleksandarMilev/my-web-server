@@ -14,10 +14,14 @@
 
   <ItemGroup>
     <Folder Include="Views\Home\" />
+    <Folder Include="Views\Product\" />
   </ItemGroup>
 
   <ItemGroup>
     <None Update="Views\Home\Index.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Views\Product\Mine.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
