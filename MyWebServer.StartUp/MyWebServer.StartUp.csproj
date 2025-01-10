@@ -9,6 +9,17 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MyWebServer.HTTP\MyWebServer.HTTP.csproj" />
+    <ProjectReference Include="..\MyWebServer.Mvc\MyWebServer.Mvc.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Views\Home\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Views\Home\Index.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
