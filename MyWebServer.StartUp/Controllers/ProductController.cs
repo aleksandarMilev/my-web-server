@@ -1,7 +1,7 @@
 ﻿namespace MyWebServer.StartUp.Controllers
 {
-    using Mvc;
     using HTTP.RequestResponse.Response;
+    using Mvc;
 
     public class ProductController : MvcController
     {

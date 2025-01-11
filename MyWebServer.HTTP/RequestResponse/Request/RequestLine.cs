@@ -13,9 +13,17 @@
             var requestLineParts = requestLine.Split(RequestLineElementsSeparator);
 
             this.Method = StringToHttpMethod(requestLineParts[0]);
-            this.Path = requestLineParts[1] != RouteSeparator 
-                ? requestLineParts[1] 
-                : $"{RouteSeparator}{HomeControllerRoute}{RouteSeparator}{IndexActionRoute}";
+
+            if (requestLineParts[1] == RouteSeparator ||
+                requestLineParts[1] == $"{RouteSeparator}{HomeControllerRoute}" ||
+                requestLineParts[1] == string.Empty)
+            {
+                this.Path = $"{RouteSeparator}{HomeControllerRoute}{RouteSeparator}{IndexActionRoute}";
+            }
+            else
+            {
+                this.Path = requestLineParts[1];
+            }
 
             this.Version = requestLineParts[2];
         }

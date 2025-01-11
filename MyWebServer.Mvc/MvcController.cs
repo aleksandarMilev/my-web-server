@@ -7,14 +7,12 @@
 
     public abstract class MvcController
     {
-        public IHttpResponse View(
-            [CallerFilePath] string filePath = "",
-            [CallerMemberName] string action = "")
+        public IHttpResponse View([CallerMemberName] string? action = null)
         {
-            var controllerClassName = Path.GetFileNameWithoutExtension(filePath);
-            var controller = controllerClassName?.Remove(
-                controllerClassName.IndexOf(Controller),
-                Controller.Length);
+            var controller = this
+                .GetType()
+                .Name
+                .Replace(Controller, string.Empty);
 
             var path = $"Views/{controller}/{action}.html";
 

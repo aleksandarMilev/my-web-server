@@ -37,8 +37,10 @@
                     {
                         continue;
                     }
-                        
-                    var path = $"{RouteSeparator}{controllerType.Name.Replace("Controller", "").ToLower()}/{action.Name.ToLower()}";
+
+                    var controller = controllerType.Name.Replace("Controller", "").ToLower();
+
+                    var path = $"{RouteSeparator}{controller}{RouteSeparator}{action.Name.ToLower()}";
 
                     var actionDelegate = () => (IHttpResponse)action.Invoke(controllerInstance, null)!;
 
